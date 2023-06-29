@@ -64,13 +64,13 @@ while(True):
 	    filter_dict=filter,
 	    query_paths=query_paths,
 	    orderBy='timestamp',
-	    # graphql_query_fmt=True,
+	    graphql_query_fmt=True,
 	)
 
 
 	# Convert Polars DataFrame to Pandas DataFrame
 	complete_trades_df = trades_df.to_pandas()
-
+	
 
 	# Filter out addresses that do not have a symbol in the subgraph
 	complete_trades_df = complete_trades_df[complete_trades_df['buyToken_symbol'] != '']
@@ -86,7 +86,6 @@ while(True):
 	#print(complete_trades_df.shape)
 
 
-	#complete_trades_df.to_csv('test.csv')
 
 	print('complete_trades_df dataframe complete') 
 
@@ -297,14 +296,15 @@ while(True):
 	complete_trades_df['worst_binance_price'] = 0.00 
 	complete_trades_df = complete_trades_df.reset_index(drop=True)
 
+	#complete_trades_df.to_csv('final_test.csv', index=False)
 
 	# Loop through each row of the dataframe.
 	for i, row in complete_trades_df.iterrows():
 	    # Retrieve the trades_id, timestamp, sell token symbol, and buy token symbol from the row.
-	    trade_id = row[0]
+	    trade_id = row[2]
 	    print('trade_id', trade_id)
-	    timestamp = row[1]
-	    sell_token_symbol = row[12]
+	    timestamp = row[5]
+	    sell_token_symbol = row[10]
 	    buy_token_symbol = row[13]
 	    sell_token_qty = row[14]
 	    buy_token_qty = row[15]
