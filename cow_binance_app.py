@@ -19,8 +19,8 @@ def run_app():
 	def get_latest_data():
 		df = pd.read_csv('cow_binance_price_data.csv')
 		latest_data = df.tail(50)
-		latest_data['timestamp'] = pd.to_datetime(latest_data['trades_timestamp'], unit='s')
-		latest_data['timestamp'] = latest_data['timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
+		latest_data['timestampx'] = pd.to_datetime(latest_data['timestamp'], unit='s')
+		latest_data['timestampx'] = latest_data['timestampx'].dt.strftime('%Y-%m-%d %H:%M:%S')
 		return latest_data
 
 
@@ -40,7 +40,7 @@ def run_app():
 	latest_data = get_latest_data()
 
 	# Display the table with the latest data
-	st.table(latest_data[['trades_timestamp', 'timestamp','trades_txHash', 'sell_token_symbol', 'buy_token_symbol','cow_price', 'binance_price', 'percentage_diff']])
+	st.table(latest_data[['timestamp', 'timestampx','txHash', 'sellToken_symbol', 'buyToken_symbol','cow_price', 'binance_price', 'percentage_diff']])
 	
 	# Create the chart with the percentage difference
 	chart_data = latest_data[['timestamp', 'percentage_diff']]   
@@ -52,9 +52,6 @@ def run_app():
 	st.write('Total number of rows:', total)
 	st.write('Number of rows with positive percentage_diff:', cow_better)
 	st.write('Number of rows with negative percentage_diff:', cow_worse)
-
-
-
 
 	# Create a button to download the data
 	st.download_button(
@@ -73,9 +70,6 @@ def run_app():
 	ax.set_ylabel('Percentage Difference')
 	# Show plot
 	st.pyplot(fig)
-
-
-
 
 
 if __name__ == '__main__':
